@@ -1,50 +1,16 @@
 package com.graphqljava.example.blogPosts.models;
 
-import jakarta.persistence.*;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
-@Entity
-public class Article {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String title;
-    private String content;
-    private String publishDate;
+public record Article(Long id, String title, String content, String publishDate) {
+    private static final List<Article> articles = Arrays.asList(
+            new Article(1L, "Article 1", "Content of article 1", "2021-01-01"),
+            new Article(2L, "Article 2", "Content of article 2", "2021-01-02"),
+            new Article(3L, "Article 3", "Content of article 3", "2021-01-03")
+    );
 
-    @ManyToMany
-    private Set<Tag> tags;
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(String publishDate) {
-        this.publishDate = publishDate;
+    public static Article getById(Long id) {
+        return articles.stream().filter(article -> article.id().equals(id)).findFirst().orElse(null);
     }
 }
