@@ -1,4 +1,4 @@
-package com.graphqljava.example.blogPosts.models;
+package com.graphqljava.example.blogPosts;
 
 import java.util.Arrays;
 import java.util.List;

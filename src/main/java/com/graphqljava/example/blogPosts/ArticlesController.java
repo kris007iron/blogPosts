@@ -1,6 +1,6 @@
-package com.graphqljava.example.blogPosts.controllers;
+package com.graphqljava.example.blogPosts;
 
-import com.graphqljava.example.blogPosts.models.Article;
+import com.graphqljava.example.blogPosts.Article;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
