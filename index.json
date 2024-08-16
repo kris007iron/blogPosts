@@ -1,0 +1,248 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Personal Blog API",
+    "description": "A simple API for managing blog articles.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/articles": {
+      "get": {
+        "summary": "Get list of articles",
+        "description": "Returns a list of articles. Filters can be applied using query parameters.",
+        "parameters": [
+          {
+            "name": "publishDate",
+            "in": "query",
+            "description": "Filter articles by publish date",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Filter articles by tags",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Article"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new article",
+        "description": "Creates a new article and returns the created article.",
+        "requestBody": {
+          "description": "Article object to be created",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Article created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles/{id}": {
+      "get": {
+        "summary": "Get a single article",
+        "description": "Returns a single article by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the article to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Article not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an article",
+        "description": "Updates an existing article by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the article to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Article object with updated data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Article updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Article not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an article",
+        "description": "Deletes an article by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the article to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Article deleted successfully"
+          },
+          "404": {
+            "description": "Article not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Article": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "How to Create a RESTful API"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is a comprehensive guide on how to create a RESTful API."
+          },
+          "author": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "publishDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-08-16"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["API", "REST", "Backend"]
+          }
+        }
+      },
+      "ArticleInput": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "How to Create a RESTful API"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is a comprehensive guide on how to create a RESTful API."
+          },
+          "author": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "publishDate": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-08-16"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": ["API", "REST", "Backend"]
+          }
+        },
+        "required": ["title", "content", "author"]
+      }
+    }
+  }
+}
